@@ -1,16 +1,14 @@
 package com.betvictor.text.utils;
 
-import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.springframework.http.*;
-import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
+import java.util.*;
 
 @Service
 public class GetRandomText {
@@ -45,5 +43,35 @@ public class GetRandomText {
         String text = Jsoup.parse(String.valueOf(json.get("text_out"))).text();
         System.out.println(text);
         return text;
+    }
+
+    public String MostFrequentWord() throws ParseException {
+        String mfw="";
+
+        StringTokenizer tokens = new StringTokenizer(CallExternalService(3,5,25));
+        //System.err.println(tokens.countTokens());
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        for (int i = 0; tokens.hasMoreTokens(); i++) {
+
+            String s = tokens.nextToken();
+            if (!map.containsKey(s)) {  // first time we've seen this string
+                map.put(s, 1);
+            }
+            else {
+                int count = map.get(s);
+                map.put(s, count + 1);
+            }
+        }
+
+        int maxValueInMap=(Collections.max(map.values()));  // This will return max value in the Hashmap
+        //System.out.println(maxValueInMap);
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {  // Itrate through hashmap
+            if (entry.getValue()==maxValueInMap) {
+                //System.out.println(entry.getKey());     // Print the key with max value
+                mfw=entry.getKey();
+            }
+        }
+
+        return mfw;
     }
 }
