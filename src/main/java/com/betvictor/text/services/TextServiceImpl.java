@@ -16,7 +16,7 @@ public class TextServiceImpl implements TextService {
     @Override
     public ResponseEntity<?> GetRandomText(Integer p_start, Integer p_end, Integer w_count_min, Integer w_count_max) {
 
-        Integer freq_word=0;
+        String freq_word="";
         Integer avg_paragraph_size=0;
         Integer avg_paragraph_processing_time=0;
         Integer total_processing_time=0;

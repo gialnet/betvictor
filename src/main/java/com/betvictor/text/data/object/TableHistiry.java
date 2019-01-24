@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class TableHistiry {
 
     private Integer id;
-    private Integer freq_word;
+    private String freq_word;
     private Integer avg_paragraph_size;
     private Integer avg_paragraph_processing_time;
     private Integer total_processing_time;
