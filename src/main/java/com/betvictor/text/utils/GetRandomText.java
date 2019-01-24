@@ -43,6 +43,7 @@ public class GetRandomText {
         JSONObject json = (JSONObject) parser.parse(result.getBody());
 
         String text = Jsoup.parse(String.valueOf(json.get("text_out"))).text();
+        System.out.println(text);
         return text;
     }
 }
