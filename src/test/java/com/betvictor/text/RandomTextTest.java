@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class RandomTextTest {
 
-    //@Autowired
-    //GetRandomText getRandomText;
+    @Autowired
+    GetRandomText getRandomText;
 
     @Test
     public void getRamdonText() throws ParseException {
 
-        System.err.println(GetRandomText.CallExternalService(1,2,5));
+        System.err.println(getRandomText.CallExternalService(1,2,5));
+        //System.err.println(GetRandomText.CallExternalService(1,2,5));
     }
 
 }

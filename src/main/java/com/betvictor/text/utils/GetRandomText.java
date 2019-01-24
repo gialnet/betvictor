@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
 import org.springframework.http.*;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,7 @@ public class GetRandomText {
 
     private static final String base_url = "http://www.randomtext.me/api/giberish/";
 
-
-    // http://www.randomtext.me/api/giberish/p-3/2-5
-
     public static String CallExternalService(Integer num_parag, Integer mini, Integer maxi) throws ParseException {
-
-
 
         HttpHeaders headers = new HttpHeaders();
         RestTemplate restTemplate = new  RestTemplate();
@@ -42,9 +38,11 @@ public class GetRandomText {
 
 
         ResponseEntity<String> result = restTemplate.exchange(str_url.toString(), HttpMethod.GET,entity, String.class);
-        System.out.println(result.getBody());
-        System.out.println(result.toString());
+        //System.out.println(result.getBody());
+        //System.out.println(result.toString());
         JSONObject json = (JSONObject) parser.parse(result.getBody());
-        return String.valueOf(json.get("text_out"));
+
+        String text = Jsoup.parse(String.valueOf(json.get("text_out"))).text();
+        return text;
     }
 }
