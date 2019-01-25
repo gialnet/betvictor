@@ -41,14 +41,22 @@ public class GetRandomText {
         JSONObject json = (JSONObject) parser.parse(result.getBody());
 
         String text = Jsoup.parse(String.valueOf(json.get("text_out"))).text();
-        System.out.println(text);
+        //System.out.println(text);
         return text;
     }
 
-    public String MostFrequentWord() throws ParseException {
+    /**
+     *
+     * @param num_parag
+     * @param mini
+     * @param maxi
+     * @return
+     * @throws ParseException
+     */
+    public String MostFrequentWord(Integer num_parag, Integer mini, Integer maxi) throws ParseException {
         String mfw="";
 
-        StringTokenizer tokens = new StringTokenizer(CallExternalService(3,5,25));
+        StringTokenizer tokens = new StringTokenizer(CallExternalService(num_parag,mini,maxi));
         //System.err.println(tokens.countTokens());
         Map<String, Integer> map = new HashMap<String, Integer>();
         for (int i = 0; tokens.hasMoreTokens(); i++) {
