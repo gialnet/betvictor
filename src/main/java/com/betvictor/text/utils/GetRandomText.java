@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class GetRandomText {
@@ -54,10 +55,20 @@ public class GetRandomText {
      * @throws ParseException
      */
     public String MostFrequentWord(Integer num_parag, Integer mini, Integer maxi) throws ParseException {
+
         String mfw="";
 
+        long startTime = System.nanoTime();
+
         StringTokenizer tokens = new StringTokenizer(CallExternalService(num_parag,mini,maxi));
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        Long convert = TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS);
+
         //System.err.println(tokens.countTokens());
+        Integer paragraph_size = tokens.countTokens();
+
         Map<String, Integer> map = new HashMap<String, Integer>();
         for (int i = 0; tokens.hasMoreTokens(); i++) {
 
@@ -80,6 +91,7 @@ public class GetRandomText {
             }
         }
 
+        mfw=mfw+","+paragraph_size.toString()+","+convert.toString();
         return mfw;
     }
 }
