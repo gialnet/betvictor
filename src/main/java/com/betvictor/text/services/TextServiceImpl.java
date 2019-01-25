@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.betvictor.text.utils.GetRandomText.CallExternalService;
@@ -20,6 +22,7 @@ public class TextServiceImpl implements TextService {
     public ResponseEntity<?> GetRandomText(Integer p_start, Integer p_end, Integer w_count_min, Integer w_count_max) throws ParseException {
 
         GetRandomText getRandomText = new GetRandomText();
+        List<String> mfwl = new ArrayList<>();
         String freq_word="";
         Integer avg_paragraph_size=0;
         Integer avg_paragraph_processing_time=0;
@@ -28,6 +31,7 @@ public class TextServiceImpl implements TextService {
         for (int i=p_start; i<=p_end; i++) {
 
             freq_word = getRandomText.MostFrequentWord(i, w_count_min, w_count_max);
+            mfwl.add(freq_word);
         }
 
         /*Response (JSON):
