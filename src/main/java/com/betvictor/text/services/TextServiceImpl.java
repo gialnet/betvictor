@@ -43,14 +43,6 @@ public class TextServiceImpl implements TextService {
         long duration = (endTime - startTime);
         long convert = TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS);
 
-        /*Response (JSON):
-        {
-            "freq_word": <most_frequent_word>
-                "avg_paragraph_size":<avg_paragraph_size>
-                "avg_paragraph_processing_time": <avg_paragraph_processing_time>
-                "total_processing_time": <total_processing_time>
-        }*/
-
         mfwl.stream().forEach(new Consumer<DataStatics>() {
             @Override
             public void accept(DataStatics dataStatics) {
@@ -58,9 +50,10 @@ public class TextServiceImpl implements TextService {
             }
         });
 
-        //List<String> values = mfwl.stream(). collect(Collectors.toList());
 
-        String joinedFirstNames = mfwl.stream().map(DataStatics::getFreq_word).collect(Collectors.joining(", "));
+        String MostFre = mfwl.stream().map(DataStatics::getFreq_word).collect(Collectors.joining(" "));
+
+        freq_word = getRandomText.MostFrequentWord(MostFre);
 
         //mfwl.stream().map(DataStatics::getAvg_paragraph_size)
 

@@ -54,6 +54,7 @@ public class GetRandomText {
      * @return
      * @throws ParseException
      */
+    @SuppressWarnings("Duplicates")
     public String MostFrequentWord(Integer num_parag, Integer mini, Integer maxi) throws ParseException {
 
         String mfw="";
@@ -92,6 +93,39 @@ public class GetRandomText {
         }
 
         mfw=mfw+","+paragraph_size.toString()+","+convert.toString();
+        return mfw;
+    }
+
+    @SuppressWarnings("Duplicates")
+    public String MostFrequentWord(String ListWords) throws ParseException {
+
+        String mfw="";
+
+        StringTokenizer tokens = new StringTokenizer(ListWords);
+
+        Map<String, Integer> map = new HashMap<String, Integer>();
+
+        for (int i = 0; tokens.hasMoreTokens(); i++) {
+
+            String s = tokens.nextToken();
+            if (!map.containsKey(s)) {  // first time we've seen this string
+                map.put(s, 1);
+            }
+            else {
+                int count = map.get(s);
+                map.put(s, count + 1);
+            }
+        }
+
+        int maxValueInMap=(Collections.max(map.values()));  // This will return max value in the Hashmap
+
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {  // Itrate through hashmap
+            if (entry.getValue()==maxValueInMap) {
+
+                mfw=entry.getKey();
+            }
+        }
+
         return mfw;
     }
 }
