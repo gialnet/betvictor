@@ -26,13 +26,18 @@ public class TextServiceImpl implements TextService {
         String freq_word="";
         Integer avg_paragraph_size=0;
         Integer avg_paragraph_processing_time=0;
-        Integer total_processing_time=0;
+
+        long startTime = System.nanoTime();
 
         for (int i=p_start; i<=p_end; i++) {
 
             freq_word = getRandomText.MostFrequentWord(i, w_count_min, w_count_max);
             mfwl.add(freq_word);
         }
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        // TODO compute max collection mfwl, get avg_paragraph_size, avg_paragraph_processing_time, total_processing_time
 
         /*Response (JSON):
         {
@@ -46,7 +51,7 @@ public class TextServiceImpl implements TextService {
         response.put("freq_word", freq_word );
         response.put("avg_paragraph_size", avg_paragraph_size );
         response.put("avg_paragraph_processing_time", avg_paragraph_processing_time );
-        response.put("total_processing_time", total_processing_time );
+        response.put("total_processing_time", duration );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
