@@ -31,7 +31,7 @@ public class TextController {
     public ResponseEntity<?> GetHistory(){
 
 
-        return null;
+        return textService.GetLast10Reords();
 
     }
 }

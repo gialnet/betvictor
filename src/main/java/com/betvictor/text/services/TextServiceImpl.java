@@ -5,6 +5,10 @@ import com.betvictor.text.data.object.TableHistory;
 import com.betvictor.text.repositories.RepositorydataBetVictor;
 import com.betvictor.text.utils.GetRandomText;
 import org.json.simple.parser.ParseException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -88,13 +92,26 @@ public class TextServiceImpl implements TextService {
         Double avg_proce = ds2.average().getAsDouble();
         Integer avg_proceInt = avg_proce.intValue();
 
-        repositorydataBetVictor.save(new TableHistory((long) 1, freq_word, avg_paraInt,avg_proceInt, (int) convert));
+        repositorydataBetVictor.save(new TableHistory((long) 5, freq_word, avg_paraInt,avg_proceInt, (int) convert));
 
         response.clear();
         response.put("freq_word", freq_word );
         response.put("avg_paragraph_size", avg_paraInt );
         response.put("avg_paragraph_processing_time", avg_proce );
         response.put("total_processing_time", convert );
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> GetLast10Reords() {
+
+        Pageable pageable = new PageRequest(0, 10, Sort.Direction.DESC, "id");
+        Page<TableHistory> topPage = repositorydataBetVictor.FindLast10(1L,pageable);
+        List<TableHistory> tableHistories = topPage.getContent();
+
+        response.clear();
+        response.put("data",tableHistories);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
