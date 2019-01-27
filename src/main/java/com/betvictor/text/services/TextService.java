@@ -3,7 +3,7 @@ package com.betvictor.text.services;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
 
-public interface TextService {
+public interface TextService  {
 
     // http://www.randomtext.me
     // http://www.randomtext.me/api/giberish/p-3/2-5

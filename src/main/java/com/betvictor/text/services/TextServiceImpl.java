@@ -1,13 +1,18 @@
 package com.betvictor.text.services;
 
 import com.betvictor.text.data.object.DataStatics;
+import com.betvictor.text.data.object.TableHistory;
+import com.betvictor.text.repositories.RepositorydataBetVictor;
 import com.betvictor.text.utils.GetRandomText;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -16,7 +21,13 @@ import java.util.stream.DoubleStream;
 @Service
 public class TextServiceImpl implements TextService {
 
+    private final RepositorydataBetVictor repositorydataBetVictor;
+
     Map<String, Object> response = new HashMap<String, Object>();
+
+    public TextServiceImpl(RepositorydataBetVictor repositorydataBetVictor) {
+        this.repositorydataBetVictor = repositorydataBetVictor;
+    }
 
     @Override
     public ResponseEntity<?> GetRandomText(Integer p_start, Integer p_end, Integer w_count_min, Integer w_count_max) throws ParseException {
@@ -72,10 +83,17 @@ public class TextServiceImpl implements TextService {
                 .stream()
                 .mapToDouble(d -> d);
 
+        Double avg_para = ds.average().getAsDouble();
+        Integer avg_paraInt = avg_para.intValue();
+        Double avg_proce = ds2.average().getAsDouble();
+        Integer avg_proceInt = avg_proce.intValue();
+
+        repositorydataBetVictor.save(new TableHistory((long) 1, freq_word, avg_paraInt,avg_proceInt, (int) convert));
+
         response.clear();
         response.put("freq_word", freq_word );
-        response.put("avg_paragraph_size", ds.average().getAsDouble() );
-        response.put("avg_paragraph_processing_time", ds2.average().getAsDouble() );
+        response.put("avg_paragraph_size", avg_paraInt );
+        response.put("avg_paragraph_processing_time", avg_proce );
         response.put("total_processing_time", convert );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
