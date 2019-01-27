@@ -92,7 +92,7 @@ public class TextServiceImpl implements TextService {
         Double avg_proce = ds2.average().getAsDouble();
         Integer avg_proceInt = avg_proce.intValue();
 
-        repositorydataBetVictor.save(new TableHistory((long) 5, freq_word, avg_paraInt,avg_proceInt, (int) convert));
+        repositorydataBetVictor.save(new TableHistory(null, freq_word, avg_paraInt,avg_proceInt, (int) convert));
 
         response.clear();
         response.put("freq_word", freq_word );
@@ -106,9 +106,8 @@ public class TextServiceImpl implements TextService {
     @Override
     public ResponseEntity<?> GetLast10Reords() {
 
-        Pageable pageable = new PageRequest(0, 10, Sort.Direction.DESC, "id");
-        Page<TableHistory> topPage = repositorydataBetVictor.FindLast10(1L,pageable);
-        List<TableHistory> tableHistories = topPage.getContent();
+
+        List<TableHistory> tableHistories = repositorydataBetVictor.findAll();
 
         response.clear();
         response.put("data",tableHistories);
