@@ -16,6 +16,6 @@ public interface RepositorydataBetVictor extends CrudRepository<TableHistory, Lo
             nativeQuery = true)
 
     List<TableHistory> findAll();
-    
+
 
 }
