@@ -5,10 +5,6 @@ import com.betvictor.text.data.object.TableHistory;
 import com.betvictor.text.repositories.RepositorydataBetVictor;
 import com.betvictor.text.utils.GetRandomText;
 import org.json.simple.parser.ParseException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -92,7 +88,7 @@ public class TextServiceImpl implements TextService {
         Double avg_proce = ds2.average().getAsDouble();
         Integer avg_proceInt = avg_proce.intValue();
 
-        repositorydataBetVictor.save(new TableHistory(null, freq_word, avg_paraInt,avg_proceInt, (int) convert));
+        repositorydataBetVictor.save(new TableHistory( freq_word, avg_paraInt,avg_proceInt, (int) convert));
 
         response.clear();
         response.put("freq_word", freq_word );
